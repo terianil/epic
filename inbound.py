@@ -1,17 +1,24 @@
 from flask import *
 import logging
- 
+import json
+from InboundPort import InboundPort 
+
+
 
 app = Flask(__name__)
+port = InboundPort()
 
 @app.route("/inbound", methods=['POST'])
-def hello():
+def inbound():
 	app.logger.debug('I\'m working.')
 
-	return request.data 
+	data = json.dumps(request.get_json())
+	port.receive(data)
+
+	return port.printAll()
 
 if __name__ == "__main__":
 	app.logger.addHandler(logging.StreamHandler())
 	app.logger.setLevel(logging.DEBUG)
 
-	app.run()
+	app.run(port=50001)
