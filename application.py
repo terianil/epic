@@ -2,11 +2,12 @@ from flask import *
 import logging
 import json
 from InboundPort import InboundPort 
-
+from Query import *
 
 
 app = Flask(__name__)
 port = InboundPort()
+query = Query()
 
 @app.route("/inbound", methods=['POST'])
 def inbound():
