@@ -8,9 +8,9 @@ class Query:
 	conditionType = None
 	conditionArgument = None
 
-	def __init__(self, functionType=AggregationFunctionType.Sum, time=5, field="field1", conditionType=ConditionType.GreaterThan, conditionArgument=100):
+	def __init__(self, field="field1", functionType=AggregationFunctionType.Sum, time=5, conditionType=ConditionType.GreaterThan, conditionArgument=100):
+		self.field = field
 		self.functionType = functionType
 		self.time = time
-		self.field = field
 		self.conditionType = conditionType
 		self.conditionArgument = conditionArgument

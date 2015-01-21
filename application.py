@@ -21,7 +21,12 @@ def inbound():
 	return port.printAll()
 
 if __name__ == "__main__":
-	XMLParser.printme(sys.argv[1])
+	query = XMLParser.printme(sys.argv[1])
+	print("Field: " + query.field)
+	print("Function: " + query.functionType.name)
+	print("Time: " + query.time)
+	print("ConditionType: " + query.conditionType.name)
+	print("ConditionArument: " + query.conditionArgument)
 	app.logger.addHandler(logging.StreamHandler())
 	app.logger.setLevel(logging.DEBUG)
 
