@@ -8,24 +8,42 @@ class Generator:
     METHOD = 'POST'
     counter = 0
     running = 0
-    range = 500
-    think = None
+    delay = 500
+    randomVar = None
+    frame = None
     label = None
-    button = None
-    button2 = None
+    startButton = None
+    stopButton = None
+    basicRandomRadio = None
+    gaussRandomRadio = None
+    longNormRandomRadio = None
     url = 'http://localhost:50001/inbound'
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!'}
     data = None
     def __init__(self):
-        self.think = tk.Tk()
-        self.label = tk.Label(self.think , fg="green")
+        self.frame = tk.Tk()
+        self.randomVar = tk.IntVar(self.frame);
+        self.label = tk.Label(self.frame , fg="green")
         self.label.pack()
-        self.button = tk.Button(self.think, text='Start', width=25, command=self.start)
-        self.button.pack()
-        self.button2 = tk.Button(self.think, text='Stop', width=25, command=self.stop)
-        self.button2.pack()
+        self.startButton = tk.Button(self.frame, text='Start', width=25, command=self.start)
+        self.startButton.pack()
+        self.stopButton = tk.Button(self.frame, text='Stop', width=25, command=self.stop)
+        self.stopButton.pack()
+        self.basicRandomRadio = tk.Radiobutton(self.frame,text="basic random", variable=self.randomVar, value =1, command=self.randomRadioHandler)
+        self.basicRandomRadio.pack()
+        self.gaussRandomRadio = tk.Radiobutton(self.frame,text="Gaussian distribution random", variable=self.randomVar, value =2, command=self.randomRadioHandler)
+        self.gaussRandomRadio.pack()
+        self.longNormRandomRadio = tk.Radiobutton(self.frame,text="long normal distribution random", variable=self.randomVar, value =3, command=self.randomRadioHandler)
+        self.longNormRandomRadio.pack()
         self.prepareJsonData()
+    def randomRadioHandler(self):
+        if self.randomVar.get() == 1:
+            print("basic random")
+        elif self.randomVar.get() == 2:
+            print("Gaussian distribution random")
+        else:
+            print("long normal distribution random")
     def prepareJsonData(self):
         self.data = json.dumps(self.json_input)
         self.data = self.data.encode('utf-8')
@@ -48,7 +66,11 @@ class Generator:
     def stop(self):
         self.running = 0
     def runWindow(self):
-        self.think.mainloop()
+        self.frame.mainloop()
+
+class DataPreparer:
+    json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!'}
+
 
 if __name__ == '__main__':
     main = Generator()
