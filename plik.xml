@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<Query>
+	<Field>nazwa</Field>
+	<Function>sum</Function>
+	<Time>100</Time> <!-- sec-->
+	<ConditionType>GreaterThan</ConditionType>
+	<ConditionArgument>100</ConditionArgument>
+</Query>

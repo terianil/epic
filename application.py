@@ -1,8 +1,10 @@
-from flask import *
-import logging
-import json
+from flask import *  # @UnusedWildImport
+import logging  # @Reimport
+import json  # @Reimport
 from InboundPort import InboundPort 
-from Query import *
+from Query import *  # @UnusedWildImport
+from XMLParser import XMLParser
+import sys
 
 
 app = Flask(__name__)
@@ -19,6 +21,7 @@ def inbound():
 	return port.printAll()
 
 if __name__ == "__main__":
+	XMLParser.printme(sys.argv[1])
 	app.logger.addHandler(logging.StreamHandler())
 	app.logger.setLevel(logging.DEBUG)
 
