@@ -17,6 +17,7 @@ class Generator:
     basicRandomRadio = None
     gaussRandomRadio = None
     longNormRandomRadio = None
+    rangeInputText = None
     url = 'http://localhost:50001/inbound'
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!'}
@@ -36,7 +37,10 @@ class Generator:
         self.gaussRandomRadio.pack()
         self.longNormRandomRadio = tk.Radiobutton(self.frame,text="long normal distribution random", variable=self.randomVar, value =3, command=self.randomRadioHandler)
         self.longNormRandomRadio.pack()
+        self.rangeInputText = tk.Entry(self.frame, validate = 'key', validatecommand = self.validateNumeric)
+        self.rangeInputText.pack()
         self.prepareJsonData()
+
     def randomRadioHandler(self):
         if self.randomVar.get() == 1:
             print("basic random")
