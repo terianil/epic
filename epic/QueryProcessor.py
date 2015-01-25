@@ -1,10 +1,11 @@
-from flask import json
-from epic import Query
+from collections import deque
+import json
+from epic.Query import Query
 
 
 class QueryProcessor:
-    query = None
-    data = None
+    query = Query()
+    data = deque()
 
     def __init__(self, query):
         assert isinstance(query, Query)
@@ -14,7 +15,7 @@ class QueryProcessor:
         pass
 
     def insertNewTuple(self, tuple):
-        assert isinstance(tuple, json)
+        self.data.append(5)
         pass
 
     def getQueryData(self):
