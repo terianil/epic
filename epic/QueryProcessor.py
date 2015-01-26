@@ -17,6 +17,8 @@ class QueryProcessor:
         self.data = deque()
 
     def executeQuery(self):
+        self.tick()
+
         result = None
 
         if(self.query.functionType == AggregationFunctionType.Sum):

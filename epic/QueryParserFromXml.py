@@ -6,10 +6,8 @@ from lxml import etree  # @UnresolvedImport
 import sys
 
 #otwieramy plik w parserze
-class XMLParser:
-    @staticmethod
-    def printme (path):
-        
+class QueryParserFromXml:
+    def parse (query):
         with open("schema.xsd", 'r') as f:
             schema_root = etree.XML(f.read())
 
@@ -17,13 +15,12 @@ class XMLParser:
         xmlparser = etree.XMLParser(schema=schema)
         
         try:
-            with open(path, 'r') as f:
-                etree.fromstring(f.read(), xmlparser) 
+            etree.fromstring(query, xmlparser)
             print("XML OK")
         except:
             print("XML BAD")
         
-        DOMTree = minidom.parse(path)
+        DOMTree = minidom.parseString(query)
 
         name = DOMTree.getElementsByTagName("Field")[0]
         field = name.firstChild.data
@@ -48,13 +45,6 @@ class XMLParser:
         name = DOMTree.getElementsByTagName("ConditionArgument")[0]
         conditionArgument = name.firstChild.data
     
-        b = Query(field, aggregateFunctionType, time, conditionType, conditionArgument)
-
-        print(field)
-        print(aggregateFunctionType)
-        print(time)
-        print(conditionType)
-        print(conditionArgument)
-        print(sys.argv[1])
+        query = Query(field, aggregateFunctionType, time, conditionType, conditionArgument)
         
-        return b
+        return query
