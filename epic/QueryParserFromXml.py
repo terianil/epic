@@ -1,13 +1,15 @@
 from xml.dom import minidom
-from AggregationFunctionType import AggregationFunctionType
-from ConditionType import ConditionType
-from Query import Query
+from epic.AggregationFunctionType import AggregationFunctionType
+from epic.ConditionType import ConditionType
 from lxml import etree  # @UnresolvedImport
 import sys
 
 #otwieramy plik w parserze
+from epic.Query import Query
+
+
 class QueryParserFromXml:
-    def parse (query):
+    def parse (self, query):
         with open("schema.xsd", 'r') as f:
             schema_root = etree.XML(f.read())
 
@@ -33,7 +35,7 @@ class QueryParserFromXml:
             aggregateFunctionType = AggregationFunctionType.Avg
     
         name = DOMTree.getElementsByTagName("Time")[0]
-        time = name.firstChild.data
+        time = float(name.firstChild.data)
 
         name = DOMTree.getElementsByTagName("ConditionType")[0]
         conditionType = name.firstChild.data
@@ -41,9 +43,11 @@ class QueryParserFromXml:
             conditionType = ConditionType.GreaterThan
         elif conditionType == "LessThan":
             conditionType = ConditionType.LessThan
+
+        print(str(type(conditionType)))
     
         name = DOMTree.getElementsByTagName("ConditionArgument")[0]
-        conditionArgument = name.firstChild.data
+        conditionArgument = float(name.firstChild.data)
     
         query = Query(field, aggregateFunctionType, time, conditionType, conditionArgument)
         

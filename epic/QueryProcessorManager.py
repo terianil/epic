@@ -17,3 +17,6 @@ class QueryProcessorManager:
     def addTuple(self, tuple):
         for item in self.queryProcessors:
             item.insertNewTuple(tuple)
+
+    def getQueryProcessors(self):
+        return self.queryProcessors

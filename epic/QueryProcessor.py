@@ -12,7 +12,7 @@ class QueryProcessor:
     data = deque
 
     def __init__(self, query):
-        assert isinstance(query, Query)
+        #assert isinstance(query, Query)
         self.query = query
         self.data = deque()
 
@@ -21,10 +21,12 @@ class QueryProcessor:
 
         result = None
 
-        if(self.query.functionType == AggregationFunctionType.Sum):
+        if(self.query.functionType is AggregationFunctionType.Sum):
             result = self.executeSumQuery()
-        elif(self.query.functionType == AggregationFunctionType.Avg):
+        elif(self.query.functionType is AggregationFunctionType.Avg):
             result = self.executeAvgQuery()
+
+        print('result: ' + str(result))
 
         return self.checkQueryCondition(result)
 
@@ -37,6 +39,9 @@ class QueryProcessor:
         return sum(item.data for item in self.data) / len(self.data)
 
     def checkQueryCondition(self, queryResultValue):
+        if queryResultValue is None:
+            return False
+
         return {
             ConditionType.GreaterThan: queryResultValue > self.query.conditionArgument,
             ConditionType.LessThan: queryResultValue < self.query.conditionArgument,
@@ -44,6 +49,7 @@ class QueryProcessor:
 
     def insertNewTuple(self, json):
         self.data.append(Tuple(json[self.query.field]))
+        print('pole:' + str(json[self.query.field]))
 
     def getQueryData(self):
         return self.data

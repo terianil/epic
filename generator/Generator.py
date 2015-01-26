@@ -6,7 +6,7 @@ from urllib.error import URLError
 from random import *
 
 class DataPreparer:
-    json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!', 'randomData' : 'X'}
+    json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!', 'value' : 'X'}
     data = None
     mode = 1
     range1 = 5
@@ -32,7 +32,7 @@ class DataPreparer:
             return normalvariate(self.range1, self.range2)
         #return 'asdasd'
     def getData(self):
-        self.json_input['randomData'] = self.__generateRandom()
+        self.json_input['value'] = self.__generateRandom()
         self.__prepareJsonData()
         return self.data
 
@@ -52,7 +52,6 @@ class Generator:
     rangeInputText = None
     url = 'http://localhost:50001/inbound'
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    json_input = {'sender': 'jdog', 'receiver': 'pacman', 'message': 'awesome!'}
     data = None
     dataPreparer = DataPreparer()
     basicRandomFromInputText = None
