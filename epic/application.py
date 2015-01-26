@@ -20,6 +20,16 @@ def inbound():
 
     return port.printAll()
 
+@app.route("/addquery", methods=['POST'])
+def addQuery():
+    queryManager.addQueryProcessor(str(request.form['query']))
+
+    return "OK"
+
+@app.route("/addqueryform", methods=['GET'])
+def addQueryForm():
+    return render_template('newQueryForm.html')
+
 
 if __name__ == "__main__":
     app.logger.addHandler(logging.StreamHandler())
