@@ -16,3 +16,6 @@ class Query:
         self.time = time
         self.conditionType = conditionType
         self.conditionArgument = conditionArgument
+
+        print('Query:')
+        print('time:' + str(self.time))

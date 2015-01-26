@@ -1,10 +1,12 @@
 from collections import deque
-import json
 from epic.Query import Query
+from epic.Tuple import Tuple
+import datetime
+from datetime import timedelta
 
 
 class QueryProcessor:
-    query = Query()
+    query = None
     data = deque()
 
     def __init__(self, query):
@@ -14,9 +16,11 @@ class QueryProcessor:
     def executeQuery(self):
         pass
 
-    def insertNewTuple(self, tuple):
-        self.data.append(5)
-        pass
+    def insertNewTuple(self, json):
+        self.data.append(Tuple(json[self.query.field]))
 
     def getQueryData(self):
-        pass
+        return self.data
+
+    def tick(self):
+        self.data = [item for item in self.data if item.timestamp >= (datetime.datetime.now() - timedelta(seconds=self.query.time))]
