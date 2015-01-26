@@ -7,5 +7,4 @@ class Tuple:
 
     def __init__(self, data):
         self.timestamp = datetime.datetime.now()
-        print('tuple:' + str(self.timestamp))
         self.data = data
