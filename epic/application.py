@@ -26,21 +26,42 @@ def inbound():
 
 @app.route("/addquery", methods=['POST'])
 def addQuery():
-    queryManager.addQueryProcessor(str(request.form['query']))
+    try:
+        queryManager.addQueryProcessor(str(request.form['query']))
+        return redirect('/')
+    except:
+        return '<h3>Syntax error!</h3></br></br><a href="/addqueryform"> Back </a>'
 
-    return "OK"
 
 @app.route("/addqueryform", methods=['GET'])
 def addQueryForm():
     return render_template('newQueryForm.html')
 
-@app.route("/queries", methods=['GET'])
+@app.route("/", methods=['GET'])
 def queries():
-    response = '<html><head><meta http-equiv="refresh" content="1" ></head><body>'
+    response = '<html><head><meta http-equiv="refresh" content="1" >'
 
+    response += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">'
+    response += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">'
+    response += '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>'
+    response += '<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>'
+
+    response += '</head><body>'
+
+    response += '<a href="/addqueryform"><button>Add new query</button></a>'
+
+    response += '<table class="table table-hover" style="margin-top: 50px">'
+    response += '<thead><tr class="row">'
+    response += '<th class="col-md-4">Query</td>'
+    response += '<th class="col-md-4">Result</td>'
+    response += '</tr></thead><tbody>'
     for queryProcessor in queryManager.getQueryProcessors():
-        response += '</br>query:</br>'
-        response += '</br>res: ' + str(queryProcessor.executeQuery())
+        response += '<tr class="row">'
+        response += '<td class="col-md-4">'+ queryProcessor.query.toString()+ '</td>'
+        response += '<td class="col-md-4">' + str(queryProcessor.executeQuery()) + '</td>'
+        response += '</tr>'
+
+    response += '</tbody></table>'
 
     response += '</body></html>'
 

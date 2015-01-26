@@ -36,7 +36,10 @@ class QueryProcessor:
         return sum(item.data for item in self.data)
 
     def executeAvgQuery(self):
-        return sum(item.data for item in self.data) / len(self.data)
+        if len(self.data) != 0:
+            return sum(item.data for item in self.data) / len(self.data)
+
+        return 0.0
 
     def checkQueryCondition(self, queryResultValue):
         if queryResultValue is None:

@@ -16,3 +16,7 @@ class Query:
         self.time = time
         self.conditionType = conditionType
         self.conditionArgument = conditionArgument
+
+    def toString(self):
+        return ' <b>funcion:</b> ' + str(self.functionType.name)+' <b>condition:</b> ' + str(self.conditionType.name)\
+               +' ' + str(self.conditionArgument)  +' <b>time:</b>' + str(self.time)
